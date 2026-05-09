@@ -1,6 +1,6 @@
 {
   "name": "switon/id",
-  "description": "Distributed ID generation for Switon Framework",
+  "description": "Distributed ID generation services for Switon Framework",
   "type": "library",
   "keywords": [
     "switon",
