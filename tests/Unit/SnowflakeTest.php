@@ -322,10 +322,9 @@ class SnowflakeTest extends TestCase
         $this->container->set('redis.primary', $primary);
         $this->container->set('redis.secondary', $secondary);
 
-        $generator = $this->container->make(Snowflake::class, [
-            'redis' => ['redis.primary', 'redis.secondary'],
-            'prefetch' => 10,
-        ]);
+        $generator = $this->container->make(Snowflake::class, ['prefetch' => 10]);
+        $redisProperty = new \ReflectionProperty(Snowflake::class, 'redis');
+        $redisProperty->setValue($generator, [$primary, $secondary]);
 
         $id = (int)$generator->next();
         $parts = $generator->parse($id);
