@@ -19,6 +19,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
+        require_once __DIR__ . '/gmp-function-override.php';
+
         $this->providerAutoRegisterEnv = getenv('SWITON_TESTS_DISABLE_PROVIDER_AUTO_REGISTER');
         putenv('SWITON_TESTS_DISABLE_PROVIDER_AUTO_REGISTER=1');
 
