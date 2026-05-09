@@ -1,0 +1,56 @@
+{
+  "name": "switon/id",
+  "description": "Distributed ID generation for Switon Framework",
+  "type": "library",
+  "keywords": [
+    "switon",
+    "ids",
+    "snowflake",
+    "uuid"
+  ],
+  "homepage": "https://github.com/switon-php/id",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "switon",
+      "email": "admin@switon.dev"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/switon-php/id",
+    "issues": "https://github.com/switon-php/id/issues",
+    "docs": "https://docs.switon.dev/latest/id"
+  },
+  "require": {
+    "php": ">=8.3",
+    "switon/core": "^1.0",
+    "switon/redis": "^1.0",
+    "switon/sync": "^1.0"
+  },
+  "require-dev": {
+    "switon/testing": "^1.0"
+  },
+  "suggest": {
+    "ext-gmp": "Required for KSUID and ShortUuid support."
+  },
+  "autoload": {
+    "psr-4": {
+      "Switon\\Id\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Switon\\Id\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "switon": {
+      "providers": [
+        "Switon\\Id\\ServiceProvider"
+      ],
+      "commands": [
+        "Switon\\Id\\Command\\IdCommand"
+      ]
+    }
+  }
+}
