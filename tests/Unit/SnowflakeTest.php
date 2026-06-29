@@ -21,70 +21,21 @@ class SnowflakeTest extends TestCase
         $this->container->set(ClientInterface::class, new FakeRedisForSnowflake());
     }
 
-    public function testSnowflakeInvalidShard(): void
+    public function testSnowflakeNextNZeroReturnsEmptyArray(): void
     {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Shard must be between 0 and 63');
-
-        $this->container->make(Snowflake::class, ['shard' => 64]);
-    }
-
-    public function testSnowflakeInvalidShardNegative(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Shard must be between 0 and 63');
-
-        $this->container->make(Snowflake::class, ['shard' => -1]);
-    }
-
-    public function testSnowflakeInvalidPrefetchTooLow(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Prefetch must be between 1 and 1000');
-
-        $this->container->make(Snowflake::class, ['prefetch' => 0]);
-    }
-
-    public function testSnowflakeInvalidPrefetchTooHigh(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Prefetch must be between 1 and 1000');
-
-        $this->container->make(Snowflake::class, ['prefetch' => 1001]);
-    }
-
-    public function testSnowflakeInvalidJitterNegative(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Jitter must be between 0 and');
-
-        $this->container->make(Snowflake::class, ['jitter' => -1]);
-    }
-
-    public function testSnowflakeInvalidJitterTooHigh(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Jitter must be between 0 and');
-
-        $this->container->make(Snowflake::class, ['jitter' => 16_777_216]);
-    }
-
-    public function testSnowflakeNextNInvalidCountZero(): void
-    {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Count must be between 1 and');
-
         $generator = $this->container->make(Snowflake::class);
-        $generator->nextN(0);
+
+        $this->assertSame([], $generator->nextN(0));
     }
 
-    public function testSnowflakeNextNInvalidCountTooHigh(): void
+    public function testSnowflakeAcceptsOutOfRangeConfiguration(): void
     {
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Count must be between 1 and');
+        $generator = $this->container->make(Snowflake::class, [
+            'shard' => 64,
+            'prefetch' => 5,
+        ]);
 
-        $generator = $this->container->make(Snowflake::class);
-        $generator->nextN(16_777_216);
+        $this->assertIsInt($generator->next());
     }
 
     public function testSnowflakeNextWithFakeRedis(): void
@@ -350,18 +301,18 @@ class SnowflakeTest extends TestCase
         $this->assertSame(1, $parts['redisIndex']);
     }
 
-    public function testSnowflakeRejectsMoreThanTwoRedisBackends(): void
+    public function testSnowflakeAcceptsMoreThanTwoRedisBackends(): void
     {
         $this->container->set('redis.primary', new FakeRedisForSnowflake());
         $this->container->set('redis.secondary', new FakeRedisForSnowflake());
         $this->container->set('redis.third', new FakeRedisForSnowflake());
 
-        $this->expectException(\Switon\Core\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Redis must have 1 or 2 instances');
-
-        $this->container->make(Snowflake::class, [
+        $generator = $this->container->make(Snowflake::class, [
             'redis' => ['redis.primary', 'redis.secondary', 'redis.third'],
+            'prefetch' => 5,
         ]);
+
+        $this->assertIsInt($generator->next());
     }
 
     public function testSnowflakeMaxShard63ProducesIdsWithMatchingShard(): void

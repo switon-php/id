@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Switon\Id\Tests\Unit;
 
-use Switon\Core\Exception\InvalidArgumentException;
 use Switon\Id\NanoId;
 use Switon\Id\Tests\TestCase;
 
@@ -116,20 +115,11 @@ class NanoIdTest extends TestCase
         echo "\n";
     }
 
-    public function testNanoIdRejectsEmptyAlphabet(): void
+    public function testNanoIdAcceptsZeroLength(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Alphabet must not be empty');
+        $generator = $this->container->make(NanoId::class, ['length' => 0]);
 
-        $this->container->make(NanoId::class, ['alphabet' => '']);
-    }
-
-    public function testNanoIdRejectsNonPositiveLength(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Length must be at least 1');
-
-        $this->container->make(NanoId::class, ['length' => 0]);
+        $this->assertSame('', $generator->next());
     }
 
     public function testNanoIdNextNReturnsUniqueValues(): void

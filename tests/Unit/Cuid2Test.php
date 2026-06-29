@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Switon\Id\Tests\Unit;
 
-use Switon\Core\Exception\InvalidArgumentException;
 use Switon\Id\Cuid2;
 use Switon\Id\Tests\TestCase;
 
@@ -153,20 +152,11 @@ class Cuid2Test extends TestCase
         echo "\n";
     }
 
-    public function testCuid2RejectsLengthBelowInjectedPositions(): void
+    public function testCuid2AllowsShortLengthConfiguration(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Length must be at least 21');
+        $generator = $this->container->make(Cuid2::class, ['length' => 20]);
 
-        $this->container->make(Cuid2::class, ['length' => 20]);
-    }
-
-    public function testCuid2RejectsEmptyAlphabet(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Alphabet must not be empty');
-
-        $this->container->make(Cuid2::class, ['alphabet' => '']);
+        $this->assertSame(20, $generator->getLength());
     }
 
     public function testCuid2NextNReturnsUniqueValues(): void

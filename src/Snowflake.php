@@ -21,10 +21,10 @@ use Throwable;
  * Use when you need sortable integer IDs across multiple nodes and processes.
  *
  * Configure with:
- * - <code>shard</code> for logical node partitioning
- * - <code>prefix</code> for Redis key isolation across apps or tenants
- * - <code>prefetch</code> and <code>jitter</code> to balance Redis load and sequence distribution
- * - <code>redis</code> for one or two sequence backends (primary then standby)
+ * - <code>shard</code> — 0…63 (6-bit node partition)
+ * - <code>prefetch</code> — 1…1000 sequence numbers per Redis INCR
+ * - <code>jitter</code> — 0…16777215 max jitter for the first batch each second (0 disables)
+ * - <code>redis</code> — one or two {@see ClientInterface} backends (primary, then optional standby)
  *
  * Bit layout (MSB to LSB):
  * - 32-bit seconds since 2020-01-01 00:00:00 UTC
@@ -86,20 +86,6 @@ class Snowflake implements IdGeneratorInterface
     public function __construct()
     {
         $this->mutex = new Mutex();
-
-        if ($this->shard < 0 || $this->shard > self::MAX_SHARD) {
-            InvalidArgumentException::raise('Shard must be between 0 and {max}', ['max' => self::MAX_SHARD]);
-        }
-        if ($this->prefetch < 1 || $this->prefetch > 1000) {
-            InvalidArgumentException::raise('Prefetch must be between 1 and 1000');
-        }
-        if ($this->jitter < 0 || $this->jitter > self::MAX_SEQUENCE) {
-            InvalidArgumentException::raise('Jitter must be between 0 and {max}', ['max' => self::MAX_SEQUENCE]);
-        }
-        $n = count($this->redis);
-        if ($n < 1 || $n > 2) {
-            InvalidArgumentException::raise('Redis must have 1 or 2 instances');
-        }
     }
 
     /** Returns the configured Redis backend for the given slot index. */
@@ -123,9 +109,6 @@ class Snowflake implements IdGeneratorInterface
     protected function fetchBatch(?int $requestSize = null): ?int
     {
         $requestSize = $requestSize ?? $this->prefetch;
-        if ($requestSize < 1 || $requestSize > self::MAX_SEQUENCE) {
-            InvalidArgumentException::raise('Request size must be between 1 and {max}', ['max' => self::MAX_SEQUENCE]);
-        }
         $n = count($this->redis);
 
         $now = $this->clock->time();
@@ -229,13 +212,10 @@ class Snowflake implements IdGeneratorInterface
     /**
      * Returns multiple Snowflake IDs while reusing any remaining local batch first.
      *
-     * @param int $count Number of IDs to generate (validated at runtime)
+     * @param int $count Number of IDs to generate (intended range: 1…16777215)
      */
     public function nextN(int $count): array
     {
-        if ($count < 1 || $count > self::MAX_SEQUENCE) {
-            InvalidArgumentException::raise('Count must be between 1 and {max}', ['max' => self::MAX_SEQUENCE]);
-        }
         $now = $this->clock->time();
         // Enough in batch and same second → no Redis, no lock, just allocate
         if ($this->remaining >= $count && $now === $this->second) {

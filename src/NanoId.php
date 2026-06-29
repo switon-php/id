@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Switon\Id;
 
 use Switon\Core\Attribute\Autowired;
-use Switon\Core\Exception\InvalidArgumentException;
 use Switon\Core\RandomInterface;
 
 /**
@@ -14,8 +13,8 @@ use Switon\Core\RandomInterface;
  * Use when you need compact IDs for URLs, tokens, or public-facing identifiers.
  *
  * Configure with:
- * - <code>alphabet</code> for allowed characters
- * - <code>length</code> for output size
+ * - <code>alphabet</code> — non-empty character set
+ * - <code>length</code> — output size (>= 1)
  *
  * @see \Switon\Id\IdGeneratorInterface
  * @see https://github.com/ai/nanoid
@@ -42,12 +41,6 @@ class NanoId implements IdGeneratorInterface
 
     public function __construct()
     {
-        if ($this->alphabet === '') {
-            InvalidArgumentException::raise('Alphabet must not be empty');
-        }
-        if ($this->length < 1) {
-            InvalidArgumentException::raise('Length must be at least 1');
-        }
         $this->alphabetSize = strlen($this->alphabet);
     }
 

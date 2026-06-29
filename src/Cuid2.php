@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Switon\Id;
 
 use Switon\Core\Attribute\Autowired;
-use Switon\Core\Exception\InvalidArgumentException;
 use Switon\Core\RandomInterface;
 
 /**
@@ -14,8 +13,8 @@ use Switon\Core\RandomInterface;
  * Use when you need compact, URL-safe IDs with stronger collision resistance than naive random strings.
  *
  * Configure with:
- * - <code>alphabet</code> for allowed characters
- * - <code>length</code> for output size
+ * - <code>alphabet</code> — non-empty character set
+ * - <code>length</code> — output size (>= 21; positions 2, 7, 12, 17, 20 carry time/counter bits)
  *
  * @see \Switon\Id\IdGeneratorInterface
  * @see https://github.com/paralleldrive/cuid2
@@ -46,16 +45,6 @@ class Cuid2 implements IdGeneratorInterface
 
     /** Last timestamp used for local monotonic ordering. */
     protected int $lastTimestamp = 0;
-
-    public function __construct()
-    {
-        if ($this->alphabet === '') {
-            InvalidArgumentException::raise('Alphabet must not be empty');
-        }
-        if ($this->length < 21) {
-            InvalidArgumentException::raise('Length must be at least 21');
-        }
-    }
 
     /**
      * Returns one CUID2-style ID string.
