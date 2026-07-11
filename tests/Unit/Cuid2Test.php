@@ -41,12 +41,6 @@ class Cuid2Test extends TestCase
             }
         }
 
-        echo "CUID2 Test Results:\n";
-        echo "==================\n";
-        foreach (array_slice($cuid2s, 0, 3) as $i => $cuid2) {
-            echo ($i + 1) . ": $cuid2\n";
-        }
-        echo "\n";
     }
 
     public function testCuid2DeterministicGeneration(): void
@@ -75,10 +69,6 @@ class Cuid2Test extends TestCase
         // Should have no collisions
         $this->assertCount(1000, array_unique($cuid2s), 'Generated CUID2s should have no collisions in 1000 samples');
 
-        echo "CUID2 Collision Test:\n";
-        echo "=====================\n";
-        echo "Generated 1000 CUID2s, unique count: " . count(array_unique($cuid2s)) . "\n";
-        echo "\n";
     }
 
     public function testCuid2CharacterDistribution(): void
@@ -108,11 +98,6 @@ class Cuid2Test extends TestCase
             'Character distribution should be reasonably even'
         );
 
-        echo "CUID2 Character Distribution Test:\n";
-        echo "===================================\n";
-        echo "Unique characters used: $uniqueChars\n";
-        echo "Total characters analyzed: $totalChars\n";
-        echo "\n";
     }
 
     public function testCuid2Configuration(): void
@@ -146,10 +131,6 @@ class Cuid2Test extends TestCase
             }
         }
 
-        echo "CUID2 Special Characters Test:\n";
-        echo "===============================\n";
-        echo "Tested 50 CUID2s for forbidden characters - all passed\n";
-        echo "\n";
     }
 
     public function testCuid2AllowsShortLengthConfiguration(): void

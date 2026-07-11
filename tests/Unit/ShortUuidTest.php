@@ -7,7 +7,7 @@ namespace Switon\Id\Tests\Unit;
 use Switon\Id\Exception\GmpExtensionRequiredException;
 use Switon\Id\ShortUuid;
 use Switon\Id\Tests\Support\GmpFunctionOverride;
-use Switon\Id\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ShortUuidTest extends TestCase
 {

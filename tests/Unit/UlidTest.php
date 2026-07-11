@@ -41,12 +41,6 @@ class UlidTest extends TestCase
             $this->assertEquals(strtoupper($ulid), $ulid, 'ULID should be uppercase: $ulid');
         }
 
-        echo "ULID Test Results:\n";
-        echo "=================\n";
-        foreach (array_slice($ulids, 0, 3) as $i => $ulid) {
-            echo ($i + 1) . ": $ulid\n";
-        }
-        echo "\n";
     }
 
     public function testUlidTimeOrdering(): void
@@ -62,12 +56,6 @@ class UlidTest extends TestCase
         // Newer ULID should be greater (comes later in lexicographic order)
         $this->assertGreaterThan($ulid1, $ulid2, 'ULIDs should be lexicographically sortable with newer ones being "larger"');
 
-        echo "ULID Time Ordering Test:\n";
-        echo "=========================\n";
-        echo "ULID1: $ulid1\n";
-        echo "ULID2: $ulid2\n";
-        echo "ULID1 < ULID2: " . ($ulid1 < $ulid2 ? 'true' : 'false') . "\n";
-        echo "\n";
     }
 
     public function testUlidMonotonicity(): void
@@ -92,14 +80,6 @@ class UlidTest extends TestCase
         // Check that we have reasonable time ordering
         $this->assertLessThanOrEqual($sorted[99], $ulids[99], 'ULID should maintain reasonable time ordering');
 
-        echo "ULID Monotonicity Test:\n";
-        echo "=======================\n";
-        echo "Generated 100 ULIDs\n";
-        echo "First ULID: {$ulids[0]}\n";
-        echo "Last ULID:  {$ulids[99]}\n";
-        echo "Sorted first: {$sorted[0]}\n";
-        echo "Sorted last:  {$sorted[99]}\n";
-        echo "\n";
     }
 
     public function testUlidDeterministicGeneration(): void
@@ -134,13 +114,6 @@ class UlidTest extends TestCase
         $this->assertGreaterThan($now - 60000, $timestamp, 'ULID timestamp should be recent'); // Within last minute
         $this->assertLessThanOrEqual($now + 1000, $timestamp, 'ULID timestamp should not be in the future');
 
-        echo "ULID Timestamp Extraction Test:\n";
-        echo "===============================\n";
-        echo "ULID: $ulid\n";
-        echo "Extracted timestamp: $timestamp\n";
-        echo "Current time: $now\n";
-        echo "Difference: " . ($now - $timestamp) . "ms\n";
-        echo "\n";
     }
 
     public function testUlidMonotonicWithinSameMillisecond(): void

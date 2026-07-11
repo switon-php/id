@@ -44,12 +44,6 @@ class Uuid4Test extends TestCase
             $this->assertContains($variant, ['8', '9', 'a', 'b'], "UUID variant should be 8-9-a-b: $uuid");
         }
 
-        echo "UUID4 Test Results:\n";
-        echo "==================\n";
-        foreach (array_slice($uuids, 0, 3) as $i => $uuid) {
-            echo ($i + 1) . ": $uuid\n";
-        }
-        echo "\n";
     }
 
     public function testUuid4DeterministicGeneration(): void

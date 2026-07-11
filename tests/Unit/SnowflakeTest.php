@@ -335,7 +335,7 @@ class SnowflakeTest extends TestCase
 
         $inner = new FakeRedisForSnowflake();
         $recording = new class ($inner) implements ClientInterface {
-            public function __construct(private FakeRedisForSnowflake $inner)
+            public function __construct(protected FakeRedisForSnowflake $inner)
             {
             }
 
@@ -383,7 +383,7 @@ class SnowflakeTest extends TestCase
 
         $inner = new FakeRedisForSnowflake();
         $recording = new class ($inner) implements ClientInterface {
-            public function __construct(private FakeRedisForSnowflake $inner)
+            public function __construct(protected FakeRedisForSnowflake $inner)
             {
             }
 

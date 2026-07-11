@@ -134,7 +134,7 @@ class IdCommandTest extends TestCase
     }
 }
 
-final class IdCommandProbe extends IdCommand
+class IdCommandProbe extends IdCommand
 {
     public function setDependencies(ConsoleInterface $console, Snowflake $snowflake): void
     {

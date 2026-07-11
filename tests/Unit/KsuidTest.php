@@ -73,12 +73,6 @@ class KsuidTest extends TestCase
             }
         }
 
-        echo "KSUID Test Results:\n";
-        echo "==================\n";
-        foreach (array_slice($ksuids, 0, 3) as $i => $ksuid) {
-            echo ($i + 1) . ": $ksuid\n";
-        }
-        echo "\n";
     }
 
     public function testKsuidTimeOrdering(): void
@@ -107,12 +101,6 @@ class KsuidTest extends TestCase
         // Should have some ordering (at least 30% in order, due to randomness)
         $this->assertGreaterThanOrEqual(3, $inOrder, 'KSUIDs should show some time-based ordering');
 
-        echo "KSUID Time Ordering Test:\n";
-        echo "=========================\n";
-        echo "Generated 10 KSUIDs, $inOrder consecutive pairs are in order\n";
-        echo "First KSUID: {$ksuids[0]}\n";
-        echo "Last KSUID:  {$ksuids[9]}\n";
-        echo "\n";
     }
 
     public function testKsuidTimestampExtraction(): void
@@ -126,12 +114,6 @@ class KsuidTest extends TestCase
         $this->assertIsInt($extractedTimestamp, 'Extracted timestamp should be an integer');
         $this->assertGreaterThan(0, $extractedTimestamp, 'Extracted timestamp should be positive');
 
-        echo "KSUID Timestamp Extraction Test:\n";
-        echo "===============================\n";
-        echo "KSUID: $ksuid\n";
-        echo "Extracted timestamp: $extractedTimestamp\n";
-        echo "Current time: " . time() . "\n";
-        echo "\n";
     }
 
     public function testKsuidDeterministicGeneration(): void
@@ -158,10 +140,6 @@ class KsuidTest extends TestCase
         // Should have no collisions
         $this->assertCount(1000, array_unique($ksuids), 'Generated KSUIDs should have no collisions in 1000 samples');
 
-        echo "KSUID Collision Test:\n";
-        echo "=====================\n";
-        echo "Generated 1000 KSUIDs, unique count: " . count(array_unique($ksuids)) . "\n";
-        echo "\n";
     }
 
     public function testKsuidBase62Encoding(): void

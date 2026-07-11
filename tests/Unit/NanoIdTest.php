@@ -41,12 +41,6 @@ class NanoIdTest extends TestCase
             }
         }
 
-        echo "NanoID Test Results:\n";
-        echo "===================\n";
-        foreach (array_slice($nanoIds, 0, 3) as $i => $nanoId) {
-            echo ($i + 1) . ": $nanoId\n";
-        }
-        echo "\n";
     }
 
     public function testNanoIdCustomConfiguration(): void
@@ -65,10 +59,6 @@ class NanoIdTest extends TestCase
             "NanoID with custom config format is invalid: $nanoId"
         );
 
-        echo "NanoID Custom Configuration Test:\n";
-        echo "=================================\n";
-        echo "Custom alphabet 'ABC123', length 8: $nanoId\n";
-        echo "\n";
     }
 
 
@@ -109,10 +99,6 @@ class NanoIdTest extends TestCase
         // Should have no collisions
         $this->assertCount(1000, array_unique($nanoIds), 'Generated NanoIDs should have no collisions in 1000 samples');
 
-        echo "NanoID Collision Test:\n";
-        echo "=====================\n";
-        echo "Generated 1000 NanoIDs, unique count: " . count(array_unique($nanoIds)) . "\n";
-        echo "\n";
     }
 
     public function testNanoIdAcceptsZeroLength(): void

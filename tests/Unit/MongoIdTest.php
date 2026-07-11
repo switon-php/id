@@ -39,12 +39,6 @@ class MongoIdTest extends TestCase
             $this->assertTrue($generator->isValid($mongoId), "MongoId validation should pass: $mongoId");
         }
 
-        echo "MongoId Test Results:\n";
-        echo "===================\n";
-        foreach (array_slice($mongoIds, 0, 3) as $i => $mongoId) {
-            echo ($i + 1) . ": $mongoId\n";
-        }
-        echo "\n";
     }
 
     public function testMongoIdDeterministicGeneration(): void
@@ -73,10 +67,6 @@ class MongoIdTest extends TestCase
         // Should have no collisions
         $this->assertCount(1000, array_unique($mongoIds), 'Generated MongoIds should have no collisions in 1000 samples');
 
-        echo "MongoId Collision Test:\n";
-        echo "======================\n";
-        echo "Generated 1000 MongoIds, unique count: " . count(array_unique($mongoIds)) . "\n";
-        echo "\n";
     }
 
     public function testMongoIdTimestampExtraction(): void
@@ -94,13 +84,6 @@ class MongoIdTest extends TestCase
         $this->assertGreaterThanOrEqual($beforeTime, $extractedTimestamp, 'MongoId timestamp should be at or after generation start');
         $this->assertLessThanOrEqual($afterTime, $extractedTimestamp, 'MongoId timestamp should be at or before generation end');
 
-        echo "MongoId Timestamp Extraction Test:\n";
-        echo "==================================\n";
-        echo "MongoId: $mongoId\n";
-        echo "Extracted timestamp: $extractedTimestamp\n";
-        echo "Current time: " . time() . "\n";
-        echo "Difference: " . (time() - $extractedTimestamp) . " seconds\n";
-        echo "\n";
     }
 
     public function testMongoIdValidation(): void
@@ -155,10 +138,6 @@ class MongoIdTest extends TestCase
             $this->assertMatchesRegularExpression('/^[0-9a-f]{16}$/', substr($mongoId, 8), "MongoId rest should be valid hex: $mongoId");
         }
 
-        echo "MongoId Structure Test:\n";
-        echo "========================\n";
-        echo "All MongoIds have valid timestamp and hex structure\n";
-        echo "\n";
     }
 
     public function testMongoIdExtractTimestampInvalidLength(): void
