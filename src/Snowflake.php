@@ -50,36 +50,27 @@ class Snowflake implements IdGeneratorInterface
     protected const int RETRY_BUFFER_MS = 20;
 
     #[Autowired] protected int $shard = 0;
-
     /** @var string Redis key prefix (default "snowflake") */
     #[Autowired] protected string $prefix = 'snowflake';
-
     /** @var int Sequence numbers requested per Redis INCR (default 100) */
     #[Autowired] protected int $prefetch = 100;
-
     /** @var int Max jitter for first batch each second (0 = disabled; default 100_000) */
     #[Autowired] protected int $jitter = 100_000;
 
     #[Autowired] protected RandomInterface $random;
-
     /** @var ClockInterface Time source for batch keys and wait calculation (testable). */
     #[Autowired] protected ClockInterface $clock;
-
     /** @var list<ClientInterface> 1–2 Redis instances (try first, on failure try second). */
     #[Autowired(instances: true)] protected array $redis = [ClientInterface::class];
 
     /** @var MutexInterface Mutex for this instance only (not shared); guards next()/nextN() in concurrent contexts. */
     protected MutexInterface $mutex;
-
     /** @var int High bits (timestamp + shard + redisIndex), 0 when no batch */
     protected int $base = 0;
-
     /** @var int Next sequence number to use in current batch */
     protected int $sequence = 0;
-
     /** @var int IDs left in current batch, 0 = need fetch */
     protected int $remaining = 0;
-
     /** @var int Unix second when current batch was fetched */
     protected int $second = 0;
 

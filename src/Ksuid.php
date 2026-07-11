@@ -26,7 +26,6 @@ class Ksuid implements IdGeneratorInterface
 {
     /** Time source for epoch-relative seconds. */
     #[Autowired] protected ClockInterface $clock;
-
     /** Random source for 16-byte payload generation. */
     #[Autowired] protected RandomInterface $random;
 

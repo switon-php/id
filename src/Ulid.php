@@ -20,7 +20,6 @@ class Ulid implements IdGeneratorInterface
 {
     /** Time source for millisecond timestamp generation. */
     #[Autowired] protected ClockInterface $clock;
-
     /** Random source for the 80-bit entropy section. */
     #[Autowired] protected RandomInterface $random;
 
@@ -29,7 +28,6 @@ class Ulid implements IdGeneratorInterface
 
     /** Last timestamp used for local monotonic ordering. */
     protected int $lastTimestamp = 0;
-
     /** Last emitted 80-bit entropy block. */
     protected string $entropy = '';
 

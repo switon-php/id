@@ -26,19 +26,15 @@ class MongoId implements IdGeneratorInterface
 {
     /** Time source for second-level timestamp generation. */
     #[Autowired] protected ClockInterface $clock;
-
     /** Random source for machine identifier generation. */
     #[Autowired] protected RandomInterface $random;
 
     /** 3-byte machine identifier. */
     protected int $machineId;
-
     /** 2-byte process identifier from current PID. */
     protected int $processId;
-
     /** Counter for calls in the same second. */
     protected int $counter = 0;
-
     /** Last timestamp used for counter reset. */
     protected int $lastTimestamp = 0;
 

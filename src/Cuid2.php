@@ -27,7 +27,6 @@ class Cuid2 implements IdGeneratorInterface
 
     /** Characters allowed in generated IDs. */
     #[Autowired] protected string $alphabet = self::DEFAULT_ALPHABET;
-
     /** Output length for generated IDs. */
     #[Autowired] protected int $length = self::DEFAULT_LENGTH;
 
@@ -42,7 +41,6 @@ class Cuid2 implements IdGeneratorInterface
 
     /** Counter for calls in the same millisecond. */
     protected int $counter = 0;
-
     /** Last timestamp used for local monotonic ordering. */
     protected int $lastTimestamp = 0;
 

@@ -23,7 +23,6 @@ class NanoId implements IdGeneratorInterface
 {
     /** Characters allowed in generated IDs. */
     #[Autowired] protected string $alphabet = self::DEFAULT_ALPHABET;
-
     /** Output length for generated IDs. */
     #[Autowired] protected int $length = self::DEFAULT_LENGTH;
 

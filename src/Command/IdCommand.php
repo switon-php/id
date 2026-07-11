@@ -19,6 +19,7 @@ use Switon\Id\Snowflake;
 class IdCommand
 {
     #[Autowired] protected ConsoleInterface $console;
+
     #[Autowired] protected Snowflake $snowflake;
 
     /**

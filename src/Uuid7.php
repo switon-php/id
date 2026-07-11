@@ -26,7 +26,6 @@ class Uuid7 implements IdGeneratorInterface
 
     /** Last timestamp used for local monotonic ordering. */
     protected int $lastTimestamp = 0;
-
     /** Sequence for calls in the same millisecond. */
     protected int $sequence = 0;
 
