@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Switon\Id\Tests\Support {
 
-    final class GmpFunctionOverride
+    class GmpFunctionOverride
     {
         protected static bool $missing = false;
 
