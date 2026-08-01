@@ -36,7 +36,7 @@ class OrderService
 }
 ```
 
-Docs: https://docs.switon.dev/latest/id
+Docs: https://github.com/switon-php/id/blob/main/docs/README.md
 
 ## License
 

@@ -147,6 +147,6 @@ bash bin/console config:options 'Switon\Id\Cuid2'
 
 - **To understand trade-offs and boundaries:** [Design Rationale](design.md#design-rationale)
 - **To answer common setup and runtime questions:** [FAQ](faq.md#id-faq)
-- **To use Snowflake with Redis-backed allocation:** [Redis Package](../../redis/docs/README.md)
-- **To resolve named properties with DI:** [Autowired](../../di/docs/autowired.md#autowired)
-- **To apply IDs in repositories and entities:** [ORM Package](../../orm/docs/README.md)
+- **To use Snowflake with Redis-backed allocation:** [Redis Package](https://github.com/switon-php/redis/blob/main/docs/README.md)
+- **To resolve named properties with DI:** [Autowired](https://github.com/switon-php/di/blob/main/docs/autowired.md#autowired)
+- **To apply IDs in repositories and entities:** [ORM Package](https://github.com/switon-php/orm/blob/main/docs/README.md)
