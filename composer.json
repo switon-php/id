@@ -25,11 +25,11 @@
         "php": ">=8.3",
         "switon/command": "^1.0",
         "switon/core": "^1.0",
-        "switon/redis": "^1.0",
         "switon/sync": "^1.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0",
+        "switon/redis": "^1.0",
         "switon/testing": "^1.0",
         "phpstan/extension-installer": "^1.4"
     },
@@ -40,7 +40,8 @@
         }
     },
     "suggest": {
-        "ext-gmp": "Required for KSUID and ShortUuid support."
+        "ext-gmp": "Required for KSUID and ShortUuid support.",
+        "switon/redis": "Snowflake sequence allocation."
     },
     "autoload": {
         "psr-4": {

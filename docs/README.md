@@ -14,7 +14,7 @@
 
 ## Installation {#installation}
 
-**Requirements:** PHP 8.3+, `switon/redis`, `switon/sync`
+**Requirements:** PHP 8.3+, `switon/sync`. Install `switon/redis` to use `Snowflake`.
 
 Install `ext-gmp` if you use `Ksuid` or `ShortUuid`.
 
